@@ -19,6 +19,9 @@ import { f, auth, database, storage, firestore } from './config/config';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
 
+import StartPage from './src/StartPage';
+
+
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
 console.warn = message => {
@@ -81,13 +84,7 @@ export default class App extends Component {
   render() {
     return (
       this.state.loggedIn == true ? (
-      <View style={styles.container}>
-      <View>
-      <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.logUserOut()}>
-      <Text style={styles.loginText}>SignOut</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
+        <StartPage />
   ):(
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -113,7 +110,7 @@ export default class App extends Component {
   )
   );
  }
-} 
+}
 
 const resizeMode = 'center';
 const styles = StyleSheet.create({
