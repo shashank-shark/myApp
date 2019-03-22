@@ -5291,6 +5291,13 @@ react-native-gesture-handler@^1.1.0:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-material-bottom-navigation@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-material-bottom-navigation/-/react-native-material-bottom-navigation-1.0.2.tgz#5b785887dc20c864c4be1a50f330831c0214094d"
+  integrity sha512-xPI9EUqBlYC1U970tZ0eX0VP7mmiZYYemnn2JWmj2xDqzdrdjEZF50woLZdRb2SnzCwC7tUb1MfSaV1T52GP8w==
+  dependencies:
+    prop-types "^15.6.1"
+
 react-native-ratings@^6.3.0:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.3.1.tgz#4e4bd87f376423dc62c933f570fc1932c78adaa4"
