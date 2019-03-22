@@ -11,6 +11,7 @@ import {
   Alert
 } from 'react-native';
 import { f, auth, database, storage, firestore } from '../config/config';
+import BottomTabNavig from './Navigators/BottomTabNavig'
 
 export default class StartPage extends Component {
 
@@ -28,7 +29,8 @@ export default class StartPage extends Component {
         <View style={styles.container}>
             <View>
                 <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.logUserOut()}>
-                    <Text style={styles.loginText}>SignOut</Text>
+                    {/* <Text style={styles.loginText}>SignOut</Text> */}
+                    <BottomTabNavig />
                 </TouchableOpacity>
             </View>
         </View>
