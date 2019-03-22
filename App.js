@@ -55,10 +55,6 @@ export default class App extends Component {
     });
   }
 
-  onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
-  }
-
   logUserOut = () => {
     auth.signOut()
     .then (() => {
@@ -69,7 +65,7 @@ export default class App extends Component {
   }
 
   loginUser = async(email,password) => {
-    if (email != '' && pass != '') {
+    if (email != '' && password != '') {
       try {
         let user = await auth.signInWithEmailAndPassword(email,password);
         console.log (user);
