@@ -18,31 +18,31 @@ class HomeScreen extends React.Component {
   }
 }
 
-class ProfileScreen extends React.Component {  
+class EventScreen extends React.Component {  
   render() {  
     return (  
         <View style={styles.container}>  
-          <Text>Profile Screen</Text>  
+          <Text>Event Screen</Text>  
         </View>  
     );  
   }  
 }
 
-class ImageScreen extends React.Component {  
+class GalleryScreen extends React.Component {  
   render() {  
       return (  
           <View style={styles.container}>  
-              <Text>Image Screen</Text>  
+              <Text>Gallery Screen</Text>  
           </View>  
       );  
   }  
 } 
 
-class CartScreen extends React.Component {  
+class ProfileScreen extends React.Component {  
   render() {  
       return (  
           <View style={styles.container}>  
-              <Text>Cart Screen</Text>  
+              <Text>Profile Screen</Text>  
           </View>  
       );  
   }  
@@ -67,21 +67,21 @@ const TabNavigator = createMaterialBottomTabNavigator(
                   </View>),  
           }  
       },  
-      Profile: { screen: ProfileScreen,  
+      Events: { screen: EventScreen,  
           navigationOptions:{  
-              tabBarLabel:'Profile',  
+              tabBarLabel:'Events',  
               tabBarIcon: ({ tintColor }) => (  
                   <View>  
-                      <Icon style={[{color: tintColor}]} size={25} name={'ios-person'}/>  
+                      <Icon style={[{color: tintColor}]} size={25} name={'ios-calendar'}/>  
                   </View>),  
               activeColor: '#f60c0d',  
               inactiveColor: '#f65a22',  
               barStyle: { backgroundColor: '#f69b31' },  
           }  
       },  
-      Image: { screen: ImageScreen,  
+      Gallery: { screen: GalleryScreen,  
           navigationOptions:{  
-              tabBarLabel:'History',  
+              tabBarLabel:'Gallery',  
               tabBarIcon: ({ tintColor }) => (  
                   <View>  
                       <Icon style={[{color: tintColor}]} size={25} name={'ios-images'}/>  
@@ -91,13 +91,13 @@ const TabNavigator = createMaterialBottomTabNavigator(
               barStyle: { backgroundColor: '#67baf6' },  
           }  
       },  
-      Cart: {  
-          screen: CartScreen,  
+      Profile: {  
+          screen: ProfileScreen,  
           navigationOptions:{  
-              tabBarLabel:'Cart',  
+              tabBarLabel:'Profile',  
               tabBarIcon: ({ tintColor }) => (  
                   <View>  
-                      <Icon style={[{color: tintColor}]} size={25} name={'ios-cart'}/>  
+                      <Icon style={[{color: tintColor}]} size={25} name={'ios-person'}/>  
                   </View>),  
           }  
       },  
