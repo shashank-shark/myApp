@@ -4,7 +4,7 @@ import {StyleSheet, Text, View,Button} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
 
-class HomeScreen extends React.Component {
+export default class HomeScreen extends React.Component {
     render() {
       return (
         <View style={styles.container}>  
