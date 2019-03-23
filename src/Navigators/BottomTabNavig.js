@@ -3,10 +3,6 @@ import { createBottomTabNavigator, createAppContainer} from 'react-navigation'
 import {StyleSheet, Text, View,Button} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
-import Tab1 from '../Screens/Tab1'
-import Tab2 from '../Screens/Tab2'
-import Tab3 from '../Screens/Tab3'
-import Tab4 from '../Screens/Tab4'
 
 class HomeScreen extends React.Component {
   render() {
