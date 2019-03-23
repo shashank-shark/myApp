@@ -1,17 +1,19 @@
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';  
 import { createBottomTabNavigator, createAppContainer} from 'react-navigation'  
-import {StyleSheet, Text, View,Button} from 'react-native'
+import {StyleSheet, Text, View,Button, Platform } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
+import { Header } from 'react-native-elements'
+import { Component } from 'react'
 
-export default class HomeScreen extends React.Component {
-    render() {
-      return (
-        <View style={styles.container}>  
-            <Text>Home Screen</Text>  
+export default class HomeScreen extends React.Component {  
+  render() {  
+      return (  
+          <View style={styles.container}>  
+              <Text>Home Screen</Text>  
           </View>  
-      )
-    }
+      );  
+  }  
 }
 
 const styles = StyleSheet.create({  
