@@ -21,7 +21,6 @@ import _ from 'lodash';
 
 import StartPage from './src/StartPage';
 
-
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
 console.warn = message => {
