@@ -4,53 +4,12 @@ import {StyleSheet, Text, View,Button} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
 
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>  
-          <Text>Home Screen</Text>  
-        </View>  
-    )
-  }
-}
+// importing explicit screens
+import EventScreen from '../Screens/EventScreen'
+import GalleryScreen from '../Screens/GalleryScreen'
+import HomeScreen from '../Screens/HomeScreen'
+import ProfileScreen from '../Screens/ProfileScreen'
 
-class EventScreen extends React.Component {  
-  render() {  
-    return (  
-        <View style={styles.container}>  
-          <Text>Event Screen</Text>  
-        </View>  
-    );  
-  }  
-}
-
-class GalleryScreen extends React.Component {  
-  render() {  
-      return (  
-          <View style={styles.container}>  
-              <Text>Gallery Screen</Text>  
-          </View>  
-      );  
-  }  
-} 
-
-class ProfileScreen extends React.Component {  
-  render() {  
-      return (  
-          <View style={styles.container}>  
-              <Text>Profile Screen</Text>  
-          </View>  
-      );  
-  }  
-}
-
-const styles = StyleSheet.create({  
-  container: {  
-      flex: 1,  
-      justifyContent: 'flex-end',  
-      alignItems: 'center'  
-  },  
-});
 
 const TabNavigator = createMaterialBottomTabNavigator(  
   {  
