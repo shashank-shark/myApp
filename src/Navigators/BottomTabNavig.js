@@ -51,7 +51,7 @@ class CartScreen extends React.Component {
 const styles = StyleSheet.create({  
   container: {  
       flex: 1,  
-      justifyContent: 'center',  
+      justifyContent: 'flex-end',  
       alignItems: 'center'  
   },  
 });
@@ -103,10 +103,13 @@ const TabNavigator = createMaterialBottomTabNavigator(
       },  
   },  
   {  
+    shifting: false,
+    tabBarPosition: 'bottom',
     initialRouteName: "Home",  
     activeColor: '#f0edf6',  
     inactiveColor: '#226557',  
-    barStyle: { backgroundColor: '#3BAD87' },  
+    barStyle: { backgroundColor: '#3BAD87' },
+    
   },  
 );  
 

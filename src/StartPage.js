@@ -26,14 +26,15 @@ export default class StartPage extends Component {
 
     render () {
         return (
-        <View style={styles.container}>
-            <View>
-                <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.logUserOut()}>
-                    {/* <Text style={styles.loginText}>SignOut</Text> */}
-                    <BottomTabNavig />
-                </TouchableOpacity>
-            </View>
-        </View>
+          <BottomTabNavig />
+        // <View style={styles.container}>
+        //     <View>
+        //         <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.logUserOut()}>
+        //             {/* <Text style={styles.loginText}>SignOut</Text> */}
+        //         </TouchableOpacity>
+                
+        //     </View>
+        // </View>
         );
     }
 }
