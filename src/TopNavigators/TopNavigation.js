@@ -6,19 +6,29 @@ import React from 'react'
 // importing explicit screens
 import Feed from '../UDScreens/Feed'
 import Upload from '../UDScreens/Upload'
+import VideoFeed from '../UDScreens/VideoFeed'
 
 
 const TabNavigator = createMaterialTopTabNavigator(  
   {  
       Feed: { screen: Feed,  
           navigationOptions:{  
-              tabBarLabel:'Feed',  
+              tabBarLabel:'Photos',  
               tabBarIcon: ({ tintColor }) => (  
                   <View>  
                       <Icon style={[{color: tintColor}]} size={25} name={'ios-home'}/>  
                   </View>),  
           }  
-      },  
+      },
+      VideoFeed: { screen: VideoFeed,  
+        navigationOptions:{  
+            tabBarLabel:'Video',  
+            tabBarIcon: ({ tintColor }) => (  
+                <View>  
+                    <Icon style={[{color: tintColor}]} size={25} name={'ios-home'}/>  
+                </View>),  
+        }  
+     }, 
       Upload: { screen: Upload,  
           navigationOptions:{  
               tabBarLabel:'Upload',  
