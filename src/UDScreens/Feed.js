@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
-import { white } from 'ansi-colors';
+import { white } from 'ansi-colors'
+import { f, auth, database, storage } from '../../config/config'
 
 export default class Feed extends Component {
 
@@ -10,8 +11,51 @@ export default class Feed extends Component {
 
         // adding states
         this.state = {
-            photo_feed: [0,1,2,3,4],
+            photo_feed: [],
             refresh: false,
+            loading: true,
+        }
+    }
+
+    componentDidMount = () => {
+
+        // Load Feed
+        this.loadFeed();
+
+    }
+
+    loadFeed = () => {
+
+
+        this.setState({
+            refresh: true,
+            photo_feed: [],
+        });
+
+        var that = this;
+        
+        var db = f.firestore();
+
+        db.collection("Photos").orderBy("posted").get().then(function(querySnapshot) {
+
+            // const exists =  (querySnapshot.empty() != true);
+            if (!querySnapshot.empty()) data = querySnapshot.docs();
+
+            var photo_feed = that.state.photo_feed;
+
+            for (var photo in data) {
+                var photoObj = data[photo];
+                db.collection("Users").doc(photoObj.author).then(function (querySnapshot) {
+                    if ()
+                });
+            }
+
+            // querySnapshot.forEach(function(doc) {
+            //     // doc.data() is never undefined for query doc snapshots
+            //     console.log(doc.id, " => ", doc.data());
+            // });
+        });
+        
         }
     }
 
