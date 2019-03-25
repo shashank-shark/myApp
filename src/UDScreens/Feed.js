@@ -51,9 +51,9 @@ export default class Feed extends Component {
                         />
                     </View>
 
-                    <View>
+                    <View style={styles.CaptionComment}>
                         <Text>Caption Text here....</Text>
-                        <Text>View Comments .. </Text>
+                        <Text style={styles.CommentsHere}>View Comments .. </Text>
                     </View>
             </View>
 
@@ -88,5 +88,12 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-    }
+    },
+    CaptionComment: {
+        padding: 5,
+    },
+    CommentsHere: {
+        marginTop: 10,
+        textAlign: 'center',
+    },
   });
