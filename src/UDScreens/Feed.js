@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
 
-export default class Feed extends Component {
+export default class Upload extends Component {
     render () {
         return (
             <View>
