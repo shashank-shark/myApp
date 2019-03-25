@@ -56,11 +56,11 @@ export default class Menu extends Component {
               <TouchableOpacity style={[styles.card, {backgroundColor:item.color}]} onPress={() => {this.clickEventListener(item.view)}}>
                 <View style={styles.cardHeader}>
                   <Text style={styles.title}>{item.title}</Text>
-                  <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/>
+                  {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
                 </View>
                 <Image style={styles.cardImage} source={{uri:item.image}}/>
                 <View style={styles.cardFooter}>
-                  <Text style={styles.subTitle}>{item.members} members</Text>
+                  {/* <Text style={styles.subTitle}>{item.members} members</Text> */}
                 </View>
               </TouchableOpacity>
             )
