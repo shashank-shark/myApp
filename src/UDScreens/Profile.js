@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
 
-class Feed extends Component {
+export default class Profile extends Component {
 
-    constructor(props) 
+    constructor(props)
     {
-        super (props);
+        super(props);
     }
-
 
     render () 
     {
-        return
-        (
+        return (
             <View>
-                <Text>Hello World</Text>
+                <Text>Upload Here</Text>
             </View>
         );
     }
 }
-
-export default Feed;
