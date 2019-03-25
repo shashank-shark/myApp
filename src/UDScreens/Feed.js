@@ -38,8 +38,8 @@ export default class Feed extends Component {
             keyExtractor={(item, index) => index.toString()}
             style={styles.flatListHere}
             renderItem={({item, index}) => (
-            <View key={index}>
-                    <View>
+            <View key={index} style={styles.PhotoFeed}>
+                    <View style={styles.TimeUploader}>
                         <Text>Time Ago</Text>
                         <Text>@Teacher1</Text>
                     </View>
@@ -52,7 +52,7 @@ export default class Feed extends Component {
                     </View>
 
                     <View>
-                        <Text>Caption Text herer....</Text>
+                        <Text>Caption Text here....</Text>
                         <Text>View Comments .. </Text>
                     </View>
             </View>
@@ -75,4 +75,18 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#eee',
     },
+    PhotoFeed: {
+        width: '100%',
+        overflow: 'hidden',
+        marginBottom: 5,
+        justifyContent: 'space-between',
+        borderBottomWidth: 1,
+        borderColor: 'grey',
+    },
+    TimeUploader: {
+        padding: 5,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }
   });
