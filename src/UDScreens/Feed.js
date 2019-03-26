@@ -72,18 +72,6 @@ export default class Feed extends Component {
         return Math.floor(seconds) + ' second' + this.pluralCheck(seconds)
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     loadFeed = () => {
         
         this.setState({
