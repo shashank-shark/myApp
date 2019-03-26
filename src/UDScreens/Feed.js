@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
 import { white } from 'ansi-colors'
-import { f, auth, database, storage } from '../../config/config'
+// import { f, auth, database, storage } from '../../config/config'
+import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 export default class Feed extends Component {
 
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
 
-        // adding states
         this.state = {
             photo_feed: [],
             refresh: false,
             loading: true,
         }
+        
+
     }
 
     componentDidMount = () => {
@@ -25,38 +27,45 @@ export default class Feed extends Component {
     }
 
     loadFeed = () => {
-
-
+        
         this.setState({
             refresh: true,
-            photo_feed: [],
+            photo_feed: []
         });
 
+        var db = firebase.firestore()
+
         var that = this;
-        
-        var db = f.firestore();
 
-        db.collection("Photos").orderBy("posted").get().then(function(querySnapshot) {
-
-            // const exists =  (querySnapshot.empty() != true);
-            if (!querySnapshot.empty()) data = querySnapshot.docs();
+        db.collection('Photos').orderBy('posted').get().then(function(querySnapshot) {
 
             var photo_feed = that.state.photo_feed;
 
-            for (var photo in data) {
-                var photoObj = data[photo];
-                db.collection("Users").doc(photoObj.author).then(function (querySnapshot) {
-                    if ()
-                });
-            }
+            querySnapshot.docs.forEach(doc => {
+               db.collection('Teachers').where("author","==",doc.data().author).get().then(function(subDoc) {
+                 subDoc.docs.forEach(function(dataDocs) {
+                   var teacherObj = dataDocs.data()
 
-            // querySnapshot.forEach(function(doc) {
-            //     // doc.data() is never undefined for query doc snapshots
-            //     console.log(doc.id, " => ", doc.data());
-            // });
-        });
-        
-        }
+                    photo_feed.push({
+                        url: teacherObj.url,
+                        caption: teacherObj.caption,
+                        posted: teacherObj.posted,
+                        author: teacherObj.author,
+                    });
+
+                    that.setState({
+                        refresh: false,
+                        loading: false,
+                    });
+
+                 })
+               }).catch(function(error) {
+                   console.log ("ERROR INNER  ", error)
+               }).catch(function(error) {
+                   console.log ("ERROR OUTER  ", error)
+               })
+            })
+        })
     }
 
     // Refresh or add new content
@@ -108,6 +117,7 @@ export default class Feed extends Component {
         );
     }
 }
+
 
 const styles = StyleSheet.create({  
     imageFeed: {  
