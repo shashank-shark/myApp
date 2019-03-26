@@ -44,14 +44,13 @@ export default class Feed extends Component {
             querySnapshot.docs.forEach(doc => {
                db.collection('Teachers').where("author","==",doc.data().author).get().then(function(subDoc) {
                  subDoc.docs.forEach(function(dataDocs) {
-                   var teacherObj = dataDocs.data()
-
                     photo_feed.push({
-                        url: teacherObj.url,
-                        caption: teacherObj.caption,
-                        posted: teacherObj.posted,
-                        author: teacherObj.author,
+                        url: doc.data().url,
+                        posted: doc.data().posted,
+                        author: dataDocs.data().author,
+                        caption: doc.data().caption,
                     });
+                    console.log (photo_feed)
 
                     that.setState({
                         refresh: false,
@@ -61,29 +60,29 @@ export default class Feed extends Component {
                  })
                }).catch(function(error) {
                    console.log ("ERROR INNER  ", error)
-               }).catch(function(error) {
-                   console.log ("ERROR OUTER  ", error)
                })
             })
+        }).catch(function(error) {
+            console.log ("ERROR OUTER  ", error)
         })
     }
 
     // Refresh or add new content
     loadNew = () => {
-        this.setState ({
-            refresh: true,
-        });
-
-        this.setState ({
-            photo_feed: [5,6,7,8,9],
-            refresh: false
-        });
+        this.loadFeed();
     }
 
     render () 
     {
         return (
             <View style={{flex: 1}}>
+
+
+            { this.state.loading == true ? (
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text>Loading..</Text>
+                </View>
+            ) : (
             <FlatList
             refreshing={this.state.refresh}
             onRefresh={this.loadNew}
@@ -93,25 +92,26 @@ export default class Feed extends Component {
             renderItem={({item, index}) => (
             <View key={index} style={styles.PhotoFeed}>
                     <View style={styles.TimeUploader}>
-                        <Text>Time Ago</Text>
-                        <Text>@Teacher1</Text>
+                        <Text>{item.posted}</Text>
+                        <Text>{item.author}</Text>
                     </View>
 
                     <View>
                         <Image
-                        source={{uri: 'https://source.unsplash.com/random/500x' + Math.floor(((Math.random() * 800) + 500))}}
+                        source={{uri: item.url }}
                         style={styles.imageFeed}
                         />
                     </View>
 
                     <View style={styles.CaptionComment}>
-                        <Text>Caption Text here....</Text>
+                        <Text>{item.caption}</Text>
                         <Text style={styles.CommentsHere}>View Comments .. </Text>
                     </View>
             </View>
 
             )}
             />
+            )}
               
             </View>
         );
