@@ -26,6 +26,64 @@ export default class Feed extends Component {
 
     }
 
+    pluralCheck = (s) => {
+        if (s == 1) {
+            return ' ago'
+        } else {
+            return 's ago'
+        }
+    }
+
+    timeConverter = (timestamp) => {
+        var a = new Date(timestamp * 1000);
+        var seconds  = Math.floor((new Date() - a) / 1000);
+
+        // check for years
+        var interval = Math.floor(seconds / 31536000);
+        if (interval > 1) {
+            return interval + ' year' + this.pluralCheck(interval)
+        }
+        
+        // check for months
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) {
+            return interval + ' month' + this.pluralCheck(interval)
+        }
+
+        // check for days
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) {
+            return interval + ' day' + this.pluralCheck(interval)
+        }
+
+        // check for hours
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) {
+            return interval + ' hour' + this.pluralCheck(interval)
+        }
+
+        // check for minutes
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) {
+            return interval + ' minute' + this.pluralCheck(interval)
+        }
+
+        // check for seconds
+        return Math.floor(seconds) + ' second' + this.pluralCheck(seconds)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     loadFeed = () => {
         
         this.setState({
@@ -46,7 +104,7 @@ export default class Feed extends Component {
                  subDoc.docs.forEach(function(dataDocs) {
                     photo_feed.push({
                         url: doc.data().url,
-                        posted: doc.data().posted,
+                        posted: that.timeConverter(doc.data().posted),
                         author: dataDocs.data().author,
                         caption: doc.data().caption,
                     });
