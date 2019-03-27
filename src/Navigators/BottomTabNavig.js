@@ -8,7 +8,7 @@ import React from 'react'
 import EventScreen from '../Screens/EventScreen'
 import GalleryScreen from '../Screens/GalleryScreen'
 import HomeScreen from '../Screens/HomeScreen'
-import ProfileScreen from '../Screens/ProfileScreen'
+import ProfileScreen from '../UDScreens/Profile'
 
 
 const TabNavigator = createMaterialBottomTabNavigator(  
