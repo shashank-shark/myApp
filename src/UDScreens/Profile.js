@@ -59,13 +59,14 @@ export default class Profile extends Component {
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.opacityButtons}>
-                                <Text style={{textAlign: "center"}}>Change PF</Text>
+                                <Text style={{textAlign: "center"}}>Change Profile Picture</Text>
                             </TouchableOpacity>
                         </View>
 
                         <View style={styles.everyThingElse}>
                             <Text>Loading Information</Text>
                         </View>
+
                     </View>
                 ) : (
                     // you are not logged in
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     opacityButtons: {
         marginTop: 10,
         marginHorizontal: 40,
-        paddingVertical: 15,
+        paddingVertical: 10,
         borderRadius: 20,
         borderColor: 'grey',
         borderWidth: 1.5,
@@ -129,6 +130,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'green',
+        backgroundColor: 'white',
     },
 });
