@@ -10,20 +10,42 @@ export default class Profile extends Component {
         super(props);
         this.state = {
             loggedin: false,
-
+            loaded: false,
+            user_info: [],
         }
     }
 
+    checkParams = () => {
+        var params = this.props.c
+    }
+
+    fetchUserInfo = (userId) => {
+        
+    }
+
     componentDidMount = () => {
+
         var that = this
+
+        
+
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 // Logged in
+                var user = firebase.auth().currentUser
+
+                that.state.user_info.push({
+                    email: user.email,
+                })
+
+                console.log (that.state.user_info)
+
                 that.setState ({
                     loggedin: true,
                 })
             } else {
                 // Logged Out
+                console.log (user)
                 that.setState ({
                     loggedin: false,
                 })
