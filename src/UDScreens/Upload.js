@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { FlatList, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import ImagePicker from 'react-native-image-picker'
 
 export default class Upload extends Component {
 
@@ -11,7 +12,6 @@ export default class Upload extends Component {
         this.state = {
             loggedin: false,
             imageId: this.uniqueId(),
-
         }
     }
 
@@ -28,6 +28,16 @@ export default class Upload extends Component {
 
     findNewImage = () => {
         // Upload new images to firebase storage
+    }
+
+    handleChoosePhoto = () => {
+        const options = {
+            noData: true,
+        };
+
+        ImagePicker.launchImageLibrary(options, (response) => {
+            console.log ("response ====> ", response)
+        })
     }
 
     componentDidMount = () => {
@@ -55,7 +65,7 @@ export default class Upload extends Component {
                     // you are logged in
                     <View style={styles.fullOuterCompUpload}>
                         <Text style={styles.uploadHeader}>Upload</Text>
-                        <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5}} onPress={() => this.findNewImage()}>
+                        <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5}} onPress={this.handleChoosePhoto}>
                             <Text style={{color: 'white'}}>Select Photo</Text>
                         </TouchableOpacity>
                         
