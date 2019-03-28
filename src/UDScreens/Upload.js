@@ -13,8 +13,6 @@ export default class Upload extends Component {
             imageId: this.uniqueId(),
 
         }
-
-        alert (this.uniqueId())
     }
 
     randomIdGenerator = () => {
