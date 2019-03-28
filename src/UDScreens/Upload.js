@@ -10,8 +10,22 @@ export default class Upload extends Component {
         super(props);
         this.state = {
             loggedin: false,
+            imageId: this.uniqueId(),
 
         }
+
+        alert (this.uniqueId())
+    }
+
+    randomIdGenerator = () => {
+        return Math.floor ((1 * Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1)
+    }
+
+    uniqueId = () => {
+        return (this.randomIdGenerator() + this.randomIdGenerator() + '-' + this.randomIdGenerator() + '-'
+        + this.randomIdGenerator() + '-' + this.randomIdGenerator() + '-' + this.randomIdGenerator());
     }
 
     findNewImage = () => {
