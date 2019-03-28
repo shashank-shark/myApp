@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -12,6 +12,10 @@ export default class Upload extends Component {
             loggedin: false,
 
         }
+    }
+
+    findNewImage = () => {
+        // Upload new images to firebase storage
     }
 
     componentDidMount = () => {
@@ -34,13 +38,20 @@ export default class Upload extends Component {
     render () 
     {
         return (
-            <View>
+            <View style={styles.fullOuterComp}>     
                 { this.state.loggedin == true ? (
                     // you are logged in
-                    <Text>Upload Page</Text>
+                    <View style={styles.fullOuterCompUpload}>
+                        <Text style={styles.uploadHeader}>Upload</Text>
+                        <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5}} onPress={() => this.findNewImage()}>
+                            <Text style={{color: 'white'}}>Select Photo</Text>
+                        </TouchableOpacity>
+                        
+                    </View>
+                    
                 ) : (
                     // you are not logged in
-                    <View>
+                    <View style={styles.userNotLoggedIn}>
                         <Text>You are not logged in</Text>
                         <Text>Please Login to view your profile</Text>
                     </View>
@@ -49,3 +60,23 @@ export default class Upload extends Component {
         );
     }
 }
+
+const styles = StyleSheet.create({  
+    fullOuterComp: {  
+        flex: 1,  
+    },
+    fullOuterCompUpload: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    userNotLoggedIn: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    uploadHeader: {
+        fontSize: 28,
+        paddingBottom: 15,
+    },
+})

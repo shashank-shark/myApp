@@ -45,7 +45,7 @@ const TabNavigator = createMaterialTopTabNavigator(
   {  
     shifting: false,
     tabBarPosition: 'top',
-    initialRouteName: "Feed",  
+    initialRouteName: "Upload",  
     activeColor: '#f0edf6',  
     inactiveColor: '#226557',  
     barStyle: { backgroundColor: '#3BAD87' },
