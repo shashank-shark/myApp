@@ -40,6 +40,16 @@ export default class Upload extends Component {
         })
     }
 
+    handleCameraPhoto = () => {
+        const options = {
+            noData: true,
+        };
+
+        ImagePicker.launchCamera(options, (response) => {
+            console.log ("Camera Response Image =========> ", response)
+        })
+    }
+
     componentDidMount = () => {
         var that = this
         firebase.auth().onAuthStateChanged(function(user) {
@@ -65,8 +75,13 @@ export default class Upload extends Component {
                     // you are logged in
                     <View style={styles.fullOuterCompUpload}>
                         <Text style={styles.uploadHeader}>Upload</Text>
-                        <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5}} onPress={this.handleChoosePhoto}>
+
+                        <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5, margin: 10}} onPress={this.handleChoosePhoto}>
                             <Text style={{color: 'white'}}>Select Photo</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5}} onPress={this.handleCameraPhoto}>
+                            <Text style={{color: 'white'}}>Take Picture</Text>
                         </TouchableOpacity>
                         
                     </View>
@@ -85,7 +100,7 @@ export default class Upload extends Component {
 
 const styles = StyleSheet.create({  
     fullOuterComp: {  
-        flex: 1,  
+        flex: 1,
     },
     fullOuterCompUpload: {
         flex: 1,
