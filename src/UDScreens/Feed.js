@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import { FlatList, StyleSheet, Text, View, Image } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Image, Dimensions     } from 'react-native'
 import { white } from 'ansi-colors'
 // import { f, auth, database, storage } from '../../config/config'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import ZoomableImage from '../Utilities/ZoomableImage'
+import ImageView from 'react-native-image-view';
+import ImageZoom from 'react-native-image-pan-zoom';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Feed extends Component {
+
 
     constructor(props) {
         super(props);
@@ -15,8 +20,6 @@ export default class Feed extends Component {
             refresh: false,
             loading: true,
         }
-        
-
     }
 
     componentDidMount = () => {
@@ -118,6 +121,7 @@ export default class Feed extends Component {
         this.loadFeed();
     }
 
+
     render () 
     {
         return (
@@ -143,7 +147,7 @@ export default class Feed extends Component {
                     </View>
 
                     <View>
-                        <Image
+                       <Image
                         source={{uri: item.url }}
                         style={styles.imageFeed}
                         />
@@ -151,7 +155,6 @@ export default class Feed extends Component {
 
                     <View style={styles.CaptionComment}>
                         <Text>{item.caption}</Text>
-                        <Text style={styles.CommentsHere}>View Comments .. </Text>
                     </View>
             </View>
 

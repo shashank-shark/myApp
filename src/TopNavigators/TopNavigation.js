@@ -13,7 +13,7 @@ const TabNavigator = createMaterialTopTabNavigator(
   {  
       Feed: { screen: Feed,  
           navigationOptions:{  
-              tabBarLabel:'Photos',  
+              tabBarLabel:'New Feed',  
               tabBarIcon: ({ tintColor }) => (  
                   <View>  
                       <Icon style={[{color: tintColor}]} size={25} name={'ios-home'}/>  
@@ -22,7 +22,7 @@ const TabNavigator = createMaterialTopTabNavigator(
       },
       VideoFeed: { screen: VideoFeed,  
         navigationOptions:{  
-            tabBarLabel:'Video',  
+            tabBarLabel:'Gallery',  
             tabBarIcon: ({ tintColor }) => (  
                 <View>  
                     <Icon style={[{color: tintColor}]} size={25} name={'ios-home'}/>  
