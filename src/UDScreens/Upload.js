@@ -46,7 +46,8 @@ export default class Upload extends Component {
                 console.log ('Upload Image')
                 this.setState({
                     imageSelected: true,
-                    imageId: this.imageId,
+                    // imageId: this.imageId,
+                    imageId: this.state.imageId,
                     uri: response.uri,
                 })
                 // this.uploadImageToStorage(response.uri);
@@ -75,6 +76,8 @@ export default class Upload extends Component {
         var that = this;
         var userid = firebase.auth().currentUser.uid;
         var imageId = this.state.imageId;
+        // var imageId = that.state.imageId;
+        console.log ("IMAGE ID $$$$$$$$$$$$$$$$$$$$$$ >>>> " + imageId)
 
         var re = /(?:\.([^.]+))?$/;
 
@@ -92,7 +95,7 @@ export default class Upload extends Component {
         const storage = firebase.storage();
 
         // const ref = firebase.storage.ref('/user'+userid+'/img').child(FilePath);
-        var uploadTask = storage.ref('user/'+userid+'/img').child(FilePath).put(blob)
+        var uploadTask = storage.ref('user/'+userid+'/img/').child(FilePath).put(blob)
 
         // var snapshot = ref.put(blob).on('state_changed', snapshot => {
         //     console.log ('Progress', snapshot.bytesTransferred, snapshot.totalBytes)
@@ -114,17 +117,73 @@ export default class Upload extends Component {
             
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 console.log (downloadURL);
-                alert(downloadURL);
+                // alert(downloadURL);
+                that.processUpload(downloadURL);
             })
         })
     }
 
-    uploadPublish = () => {
-        if (this.state.caption != '') {
-            this.uploadImageToStorage(this.state.uri)
-        } else {
-            alert('Please enter the caption')
+
+    processUpload = (url) => {
+        // process here
+
+        // set needed info
+        var imageId = this.state.imageId;
+        var userId = firebase.auth().currentUser.uid;
+        var caption = this.state.caption;
+        var dateTime = Date.now();
+        var timestamp = Math.floor(dateTime / 100)
+        var imageUrl = url
+        
+       console.log ("Befor Image ID ##################>>>>> "+this.state.imageId)
+
+        // build photo object
+        // author, caption, posted, url
+
+        var photoObj = {
+            author: userId,
+            caption: caption,
+            posted: timestamp,
+            url: imageUrl,
         }
+
+        console.log ("Image ID --------->  "+imageId)
+        console.log ("User ID ----------------->" + userId)
+        console.log (photoObj)
+
+
+        // create firestore variables
+        var db = firebase.firestore();
+
+
+        // update to database
+        
+
+
+        // add to main feed
+        db.collection('Photos').doc(imageId).set(photoObj)
+
+
+        // set users photos objects
+        db.collection('Teachers').doc(userId).collection('Photos').doc(imageId).set(photoObj);
+
+        alert("Image Uploaded")
+
+    }
+
+    uploadPublish = () => {
+
+        if (this.state.uploading == false) {
+            if (this.state.caption != '') {
+                this.uploadImageToStorage(this.state.uri)
+            } else {
+                alert('Please enter the caption')
+            }
+        } else {
+            console.log ('Ignore button tap as already uploading')
+        }
+
+        
     }
 
 
