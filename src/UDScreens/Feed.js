@@ -75,6 +75,36 @@ export default class Feed extends Component {
         return Math.floor(seconds) + ' second' + this.pluralCheck(seconds)
     }
 
+
+    // addToFlatList = (photo_feed, doc) => {
+    //     var that = this;
+
+    //     // querySnapshot.docs.forEach(doc => {
+    //         db.collection('Teachers').where("author","==",doc.data().author).get().then(function(subDoc) {
+    //           subDoc.docs.forEach(function(dataDocs) {
+    //              photo_feed.push({
+    //                  url: doc.data().url,
+    //                  posted: that.timeConverter(doc.data().posted),
+    //                  author: dataDocs.data().author,
+    //                  caption: doc.data().caption,
+    //              });
+    //              console.log (photo_feed)
+
+    //              that.setState({
+    //                  refresh: false,
+    //                  loading: false,
+    //              });
+
+    //           })
+    //         }).catch(function(error) {
+    //             console.log ("ERROR INNER  ", error)
+    //         })
+    //     //  })
+        
+
+    // }
+
+
     loadFeed = () => {
         
         this.setState({
@@ -91,29 +121,48 @@ export default class Feed extends Component {
             var photo_feed = that.state.photo_feed;
 
             querySnapshot.docs.forEach(doc => {
-               db.collection('Teachers').where("author","==",doc.data().author).get().then(function(subDoc) {
-                 subDoc.docs.forEach(function(dataDocs) {
-                    photo_feed.push({
-                        url: doc.data().url,
-                        posted: that.timeConverter(doc.data().posted),
-                        author: dataDocs.data().author,
-                        caption: doc.data().caption,
-                    });
-                    console.log (photo_feed)
+            //    db.collection('Teachers').where("author","==",doc.data().author).get().then(function(subDoc) {
+                //  subDoc.docs.forEach(function(dataDocs) {
+                //     photo_feed.push({
+                //         url: doc.data().url,
+                //         posted: that.timeConverter(doc.data().posted),
+                //         author: dataDocs.data().author,
+                //         caption: doc.data().caption,
+                //     });
+                //     console.log (photo_feed)
 
-                    that.setState({
-                        refresh: false,
-                        loading: false,
-                    });
+                //     that.setState({
+                //         refresh: false,
+                //         loading: false,
+                //     });
 
-                 })
-               }).catch(function(error) {
-                   console.log ("ERROR INNER  ", error)
-               })
+                //  })
+
+                console.log (photo_feed)
+
+                photo_feed.push({
+                    url: doc.data().url,
+                    posted: that.timeConverter(doc.data().posted),
+                    author: doc.data().author,
+                    caption: doc.data().caption,
+                });
+
+                console.log (photo_feed)
+
+                that.setState({
+                    refresh: false,
+                    loading: false,
+                });
+
+            //    }).catch(function(error) {
+            //        console.log ("ERROR INNER  ", error)
+            //    })
             })
         }).catch(function(error) {
             console.log ("ERROR OUTER  ", error)
         })
+
+        // that.addToFlatList(photo_feed, doc) 
     }
 
     // Refresh or add new content

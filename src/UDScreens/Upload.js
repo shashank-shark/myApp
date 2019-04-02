@@ -134,6 +134,7 @@ export default class Upload extends Component {
         var dateTime = Date.now();
         var timestamp = Math.floor(dateTime / 100)
         var imageUrl = url
+        var displayName = firebase.auth().currentUser.displayName
         
        console.log ("Befor Image ID ##################>>>>> "+this.state.imageId)
 
@@ -141,7 +142,8 @@ export default class Upload extends Component {
         // author, caption, posted, url
 
         var photoObj = {
-            author: userId,
+            dispName : displayName,
+            author: displayName,
             caption: caption,
             posted: timestamp,
             url: imageUrl,
@@ -182,7 +184,6 @@ export default class Upload extends Component {
         } else {
             console.log ('Ignore button tap as already uploading')
         }
-
         
     }
 
