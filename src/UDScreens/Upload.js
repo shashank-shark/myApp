@@ -194,8 +194,7 @@ export default class Upload extends Component {
             imageSelected: false,
             caption: '',
             uri: '',
-        });
-        
+        }); 
 
     }
 
