@@ -15,7 +15,7 @@ export default class VideoFeed extends Component {
     {
         return (
             <View>
-                <Text>VideoFeed Here</Text>
+                <Text>Gallery Here</Text>
             </View>
         );
     }
