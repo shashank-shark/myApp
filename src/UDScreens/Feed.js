@@ -116,7 +116,7 @@ export default class Feed extends Component {
 
         var that = this;
 
-        db.collection('Photos').orderBy('posted').get().then(function(querySnapshot) {
+        db.collection('Photos').orderBy('posted','desc').get().then(function(querySnapshot) {
 
             var photo_feed = that.state.photo_feed;
 
@@ -248,4 +248,4 @@ const styles = StyleSheet.create({
         marginTop: 10,
         textAlign: 'center',
     },
-  });
+});

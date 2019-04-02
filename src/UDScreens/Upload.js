@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { TextInput, ActivityIndicator,  FlatList, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { Alert, TextInput, ActivityIndicator,Keyboard, FlatList, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import ImagePicker from 'react-native-image-picker'
+import TopNavigation from '../TopNavigators/TopNavigation'
 
 export default class Upload extends Component {
+
 
     constructor(props)
     {
@@ -67,6 +69,22 @@ export default class Upload extends Component {
 
         ImagePicker.launchCamera(options, (response) => {
             console.log ("Camera Response Image =========> ", response)
+            console.log ("response ====> ", response)
+            if (!response.didCancel) {
+                console.log ('Upload Image')
+                this.setState({
+                    imageSelected: true,
+                    // imageId: this.imageId,
+                    imageId: this.state.imageId,
+                    uri: response.uri,
+                })
+                // this.uploadImageToStorage(response.uri);
+            } else {
+                console.log ('Cancelled')
+                this.setState({
+                    imageSelected: false,
+                })
+            }
         })
     }
 
@@ -124,7 +142,7 @@ export default class Upload extends Component {
     }
 
 
-    processUpload = (url) => {
+    processUpload =  (url) => {
         // process here
 
         // set needed info
@@ -132,7 +150,7 @@ export default class Upload extends Component {
         var userId = firebase.auth().currentUser.uid;
         var caption = this.state.caption;
         var dateTime = Date.now();
-        var timestamp = Math.floor(dateTime / 100)
+        var timestamp = Math.floor(+new Date() / 1000)
         var imageUrl = url
         var displayName = firebase.auth().currentUser.displayName
         
@@ -151,7 +169,7 @@ export default class Upload extends Component {
 
         console.log ("Image ID --------->  "+imageId)
         console.log ("User ID ----------------->" + userId)
-        console.log (photoObj)
+        console.log ("Time Stamp ******************************> ", timestamp)
 
 
         // create firestore variables
@@ -171,6 +189,14 @@ export default class Upload extends Component {
 
         alert("Image Uploaded")
 
+        this.setState({
+            uploading: false,
+            imageSelected: false,
+            caption: '',
+            uri: '',
+        });
+        
+
     }
 
     uploadPublish = () => {
@@ -189,6 +215,7 @@ export default class Upload extends Component {
 
 
     componentDidMount = () => {
+
         var that = this
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
@@ -207,6 +234,8 @@ export default class Upload extends Component {
 
     render () 
     {
+        const {goBack} = this.props.navigation;
+
         return (
             <View style={styles.fullOuterComp}>     
                 { this.state.loggedin == true ? (
