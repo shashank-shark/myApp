@@ -6,7 +6,7 @@ import React from 'react'
 // importing explicit screens
 import Feed from '../UDScreens/Feed'
 import Upload from '../UDScreens/Upload'
-import VideoFeed from '../UDScreens/VideoFeed'
+import GalleryScreen from '../UDScreens/GalleryScreen'
 
 
 const TabNavigator = createMaterialTopTabNavigator(  
@@ -20,7 +20,7 @@ const TabNavigator = createMaterialTopTabNavigator(
                   </View>),  
           }  
       },
-      VideoFeed: { screen: VideoFeed,  
+      GalleryScreen: { screen: GalleryScreen,  
         navigationOptions:{  
             tabBarLabel:'Gallery',  
             tabBarIcon: ({ tintColor }) => (  
@@ -45,7 +45,7 @@ const TabNavigator = createMaterialTopTabNavigator(
   {  
     shifting: false,
     tabBarPosition: 'top',
-    initialRouteName: "Upload",  
+    initialRouteName: "GalleryScreen",  
     activeColor: '#f0edf6',  
     inactiveColor: '#226557',  
     barStyle: { backgroundColor: '#3BAD87' },
