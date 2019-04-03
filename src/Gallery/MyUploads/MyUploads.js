@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Button, StyleSheet } from 'react-native'
+import { View, Button, StyleSheet, Text } from 'react-native'
 
 export default class MyUploads extends Component {
     render() {

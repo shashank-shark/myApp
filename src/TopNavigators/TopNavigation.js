@@ -1,4 +1,4 @@
-import { createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator} from 'react-navigation'  
+import { createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation'  
 import {StyleSheet, Text, View,Button} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
@@ -7,6 +7,9 @@ import React from 'react'
 import Feed from '../UDScreens/Feed'
 import Upload from '../UDScreens/Upload'
 import GalleryScreen from '../UDScreens/GalleryScreen'
+import ImageGallery from '../Gallery/ImageGallery/ImageGallery'
+import VideoGallery from '../Gallery/VideoGallery/VideoGallery'
+import MyUploads from '../Gallery/MyUploads/MyUploads'
 
 
 const TabNavigator = createMaterialTopTabNavigator(  
@@ -20,7 +23,26 @@ const TabNavigator = createMaterialTopTabNavigator(
                   </View>),  
           }  
       },
-      GalleryScreen: { screen: GalleryScreen,  
+      GalleryScreen: { screen: createStackNavigator({
+          ImageGallery: {
+              screen: ImageGallery
+          },
+          VideoGallery: {
+              screen: VideoGallery
+          },
+          MyUploads: {
+              screen: MyUploads
+          },
+          GalleryScreen: {
+              screen: GalleryScreen
+          },
+      }, {
+            initialRouteName: "GalleryScreen",
+            headerMode: 'none',
+            navigationOptions: {
+                headerVisible: false,
+            }
+      }),  
         navigationOptions:{  
             tabBarLabel:'Gallery',  
             tabBarIcon: ({ tintColor }) => (  
@@ -51,6 +73,6 @@ const TabNavigator = createMaterialTopTabNavigator(
     barStyle: { backgroundColor: '#3BAD87' },
     
   },  
-);  
+);
 
-export default createAppContainer(TabNavigator);  
+export default createAppContainer(TabNavigator);
