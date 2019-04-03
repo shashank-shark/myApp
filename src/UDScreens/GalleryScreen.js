@@ -27,7 +27,7 @@ export default class GalleryScreen extends Component {
       data: [
         {id:1,  name: "Image Gallery",   image:"https://img.icons8.com/clouds/100/000000/groups.png",           count:124.711, navigName:'ImageGallery' },
         {id:2,  name: "Video Gallery",    image:"https://img.icons8.com/color/100/000000/real-estate.png",       count:234.722, navigName: 'VideoGallery' },
-        {id:3,  name: "Jobs",       image:"https://img.icons8.com/color/100/000000/find-matching-job.png", count:324.723} ,
+        // {id:3,  name: "Jobs",       image:"https://img.icons8.com/color/100/000000/find-matching-job.png", count:324.723} ,
         {id:4,  name: "My Uploads",   image:"https://img.icons8.com/clouds/100/000000/employee-card.png",    count:154.573, navigName: 'MyUploads'} ,
         // {id:5,  name: "For sale",   image:"https://img.icons8.com/color/100/000000/land-sales.png",        count:124.678} ,
       ]
@@ -50,7 +50,7 @@ export default class GalleryScreen extends Component {
           }}
           renderItem={({item}) => {
           return (
-            <TouchableOpacity style={styles.card} onPress={() => {this.clickEventListener(item)}}>
+            <TouchableOpacity style={styles.card} onPress={() => {this.props.navigation.navigate(item.navigName)}}>
               <Image style={styles.image} source={{uri: item.image}}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{item.name}</Text>

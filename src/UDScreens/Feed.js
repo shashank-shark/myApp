@@ -23,7 +23,7 @@ export default class Feed extends Component {
     }
 
     componentDidMount = () => {
-
+        console.log ("============================   COMPONENT LOADED ===================")
         // Load Feed
         this.loadFeed();
 
