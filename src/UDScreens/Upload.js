@@ -61,6 +61,31 @@ export default class Upload extends Component {
         })
     }
 
+    handleChooseVideo = () => {
+        const options = {
+            noData: true,
+            mediaType: 'video',
+        };
+
+        ImagePicker.launchImageLibrary(options, (response) => {
+            console.log ("response ====> ", response)
+            if (!response.didCancel) {
+                console.log ('Upload Image')
+                this.setState({
+                    imageSelected: true,
+                    imageId: this.uniqueId(),
+                    uri: response.uri,
+                })
+                // this.uploadImageToStorage(response.uri);
+            } else {
+                console.log ('Cancelled')
+                this.setState({
+                    imageSelected: false,
+                })
+            }
+        })
+    }
+
     handleCameraPhoto = () => {
         const options = {
             noData: true,
@@ -112,8 +137,35 @@ export default class Upload extends Component {
 
         const storage = firebase.storage();
 
-        // const ref = firebase.storage.ref('/user'+userid+'/img').child(FilePath);
-        var uploadTask = storage.ref('user/'+userid+'/img/').child(FilePath).put(blob)
+        if (ext.includes('mp4') || ext.includes('MP4')) {
+            var uploadTask = storage.ref('user/'+userid+'/video/').child(FilePath).put(blob)
+
+        // var snapshot = ref.put(blob).on('state_changed', snapshot => {
+        //     console.log ('Progress', snapshot.bytesTransferred, snapshot.totalBytes)
+        // })
+
+        uploadTask.on('state_changed', function(snapshot) {
+            var progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+            console.log ('Uploading is ' + progress + '% complete')
+            that.setState ({
+                progress: progress,
+            })
+        }, function(error) {
+            console.log ('error with upload - ' + error)
+        }, function() {
+            // upload is completed
+            that.setState({
+                progress: 100,
+            });
+            
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log (downloadURL);
+                // alert(downloadURL);
+                that.processVideoUpload(downloadURL);
+            })
+        })
+        } else {
+            var uploadTask = storage.ref('user/'+userid+'/img/').child(FilePath).put(blob)
 
         // var snapshot = ref.put(blob).on('state_changed', snapshot => {
         //     console.log ('Progress', snapshot.bytesTransferred, snapshot.totalBytes)
@@ -139,6 +191,35 @@ export default class Upload extends Component {
                 that.processUpload(downloadURL);
             })
         })
+        }
+
+        // // const ref = firebase.storage.ref('/user'+userid+'/img').child(FilePath);
+        // var uploadTask = storage.ref('user/'+userid+'/img/').child(FilePath).put(blob)
+
+        // // var snapshot = ref.put(blob).on('state_changed', snapshot => {
+        // //     console.log ('Progress', snapshot.bytesTransferred, snapshot.totalBytes)
+        // // })
+
+        // uploadTask.on('state_changed', function(snapshot) {
+        //     var progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0);
+        //     console.log ('Uploading is ' + progress + '% complete')
+        //     that.setState ({
+        //         progress: progress,
+        //     })
+        // }, function(error) {
+        //     console.log ('error with upload - ' + error)
+        // }, function() {
+        //     // upload is completed
+        //     that.setState({
+        //         progress: 100,
+        //     });
+            
+        //     uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        //         console.log (downloadURL);
+        //         // alert(downloadURL);
+        //         that.processUpload(downloadURL);
+        //     })
+        // })
     }
 
 
@@ -188,6 +269,59 @@ export default class Upload extends Component {
         db.collection('Teachers').doc(userId).collection('Photos').doc(imageId).set(photoObj);
 
         alert("Image Uploaded")
+
+        this.setState({
+            uploading: false,
+            imageSelected: false,
+            caption: '',
+            uri: '',
+        }); 
+
+    }
+
+    processVideoUpload = (url) => {
+        var imageId = this.state.imageId;
+        var userId = firebase.auth().currentUser.uid;
+        var caption = this.state.caption;
+        var dateTime = Date.now();
+        var timestamp = Math.floor(+new Date() / 1000)
+        var imageUrl = url
+        var displayName = firebase.auth().currentUser.displayName
+        
+       console.log ("Befor Image ID ##################>>>>> "+this.state.imageId)
+
+        // build photo object
+        // author, caption, posted, url
+
+        var photoObj = {
+            dispName : displayName,
+            author: displayName,
+            caption: caption,
+            posted: timestamp,
+            url: imageUrl,
+        }
+
+        console.log ("Image ID --------->  "+imageId)
+        console.log ("User ID ----------------->" + userId)
+        console.log ("Time Stamp ******************************> ", timestamp)
+
+
+        // create firestore variables
+        var db = firebase.firestore();
+
+
+        // update to database
+        
+
+
+        // add to main feed
+        db.collection('Videos').doc(imageId).set(photoObj)
+
+
+        // set users photos objects
+        db.collection('Teachers').doc(userId).collection('Videos').doc(imageId).set(photoObj);
+
+        alert("Video Uploaded")
 
         this.setState({
             uploading: false,
@@ -291,6 +425,10 @@ export default class Upload extends Component {
 
                             <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5}} onPress={this.handleCameraPhoto}>
                                 <Text style={{color: 'white'}}>Take Picture</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={{padding: 10, backgroundColor: 'blue', borderRadius: 5, marginTop: 10}} onPress={this.handleChooseVideo}>
+                                <Text style={{color: 'white'}}>Upload Video</Text>
                             </TouchableOpacity>
                             
                         </View>

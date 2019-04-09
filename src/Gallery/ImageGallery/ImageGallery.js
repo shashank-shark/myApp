@@ -16,7 +16,7 @@ import PhotoGrid from 'react-native-image-grid';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
-class App extends React.Component {
+class ImageGallery extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -103,7 +103,11 @@ class App extends React.Component {
         console.log (idCount)
       })
       that.setState(items)
-    })
+    }).then(dcum => {
+      console.log (items)
+  }).catch(err => {
+      console.log ("ERROR occurred" + err)
+  })
   }
 
   renderHeader() {
@@ -192,7 +196,7 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default ImageGallery;
 const styles = StyleSheet.create({
   containerStyle: {
     justifyContent: 'center',
