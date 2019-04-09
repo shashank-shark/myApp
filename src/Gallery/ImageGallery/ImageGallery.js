@@ -13,24 +13,99 @@ import {
 
 import PhotoGrid from 'react-native-image-grid';
 
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       imageuri: '',
       ModalVisibleStatus: false,
+      items: [],
     };
-    this.state = { items: [] };
+    // this.state = { items: [] };
+    // this.state = {
+    //   items: [],
+    // }
   }
 
   componentDidMount() {
+    
+
+    let totCount = 0;
+    var db = firebase.firestore()
+
     var that = this;
-    let items = Array.apply(null, Array(60)).map((v, i) => {
-      //Using demo placeholder images but you can add your images here
-      return { id: i, src: 'http://placehold.it/200x200?text=' + (i +1) };
-    });
-    that.setState({ items });
+
+    // get the count of documents
+    var docRef = db.collection("Photos").doc("total")
+    docRef.get().then(function(doc) {
+      totCount = doc.data().value
+    })
+
+    db.collection('Photos').orderBy('posted','desc').get().then(function(querySnapshot){
+      var items = that.state.items;
+      var idCount = 0;
+      querySnapshot.docs.forEach(doc => {
+        console.log (doc.data().url)
+        items.push({
+           id: idCount, src: doc.data().url
+        })
+
+        console.log (items)
+        idCount = idCount + 1;
+        console.log (idCount)
+      })
+      that.setState(items)
+    })
+
+    // let items = Array.apply(null, Array(60)).map((v, i) => {
+    //   //Using demo placeholder images but you can add your images here
+    //   return { id: i, src: 'http://placehold.it/200x200?text=' + (i +1) };
+    // });
+    // console.log (items)
+    // that.setState({ items });
+
+    // db.collection('Photos').orderBy('posted','desc').get().then(function(snapshot) {
+    //   let total_count = 0;
+    //   snapshot.forEach(doc => {
+    //     total_count += doc.data().count;
+    //   })
+
+    //   console.log (total_count)
+    // })
   }
+
+  loadGallery = () => {
+    let totCount = 0;
+    var db = firebase.firestore()
+
+    var that = this;
+
+    // get the count of documents
+    // var docRef = db.collection("Photos").doc("total")
+    // docRef.get().then(function(doc) {
+    //   totCount = doc.data().value
+    // })
+
+    db.collection('Photos').orderBy('posted','desc').get().then(function(querySnapshot){
+      var items = that.state.items;
+      var idCount = 0;
+      querySnapshot.docs.forEach(doc => {
+        console.log (doc.data().url)
+        items.push({
+           id: idCount, src: doc.data().url
+        })
+
+        console.log (items)
+        idCount = idCount + 1;
+        console.log (idCount)
+      })
+      that.setState(items)
+    })
+  }
+
   renderHeader() {
     //Header of the Screen
     return <Text style={{padding:16, fontSize:20, color:'white', backgroundColor:'green'}}>Image Gallery</Text>;
