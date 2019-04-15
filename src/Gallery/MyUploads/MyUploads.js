@@ -35,6 +35,7 @@ class MyUploads extends React.Component {
 
     let totCount = 0;
     var db = firebase.firestore()
+    var teacherUid = firebase.auth().currentUser.uid;
 
     var that = this;
 
@@ -44,7 +45,7 @@ class MyUploads extends React.Component {
     //   totCount = doc.data().value
     // })
 
-    db.collection('Photos').orderBy('posted','desc').get().then(function(querySnapshot){
+    db.collection('Teachers').doc(teacherUid).collection('Photos').orderBy('posted','desc').get().then(function(querySnapshot){
       var items = that.state.items;
       var idCount = 0;
       querySnapshot.docs.forEach(doc => {

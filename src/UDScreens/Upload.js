@@ -332,6 +332,15 @@ export default class Upload extends Component {
 
     }
 
+    cancelUpload = () => {
+        this.setState({
+            uploading: false,
+            imageSelected: false,
+            caption: '',
+            uri: '',
+        }); 
+    }
+
     uploadPublish = () => {
 
         if (this.state.uploading == false) {
@@ -379,7 +388,7 @@ export default class Upload extends Component {
                     { this.state.imageSelected == true ? (
                         <View style={{flex: 1}}>
                             <View style={{padding: 5}}>
-                                <Text style={{marginTop: 5}}>Caption:</Text>
+                                <Text style={{marginTop: 5}}>Description:</Text>
 
                                 <TextInput 
                                 editable={true}
@@ -396,6 +405,13 @@ export default class Upload extends Component {
                                 style={styles.uploadOpButton}
                                 >
                                     <Text style={{textAlign: 'center', color: 'white'}}>Publish</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity 
+                                onPress={() => this.cancelUpload()}
+                                style={styles.CancelOpButton}
+                                >
+                                    <Text style={{textAlign: 'center', color: 'white'}}>Cancel</Text>
                                 </TouchableOpacity>
 
                             { this.state.uploading == true ? (
@@ -478,7 +494,15 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     uploadOpButton: {
-        alignSelf: 'center',
+        // alignSelf: 'center',
+        width: 170,
+        marginHorizontal: 'auto',
+        backgroundColor: 'purple',
+        borderRadius: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 20
+    },
+    CancelOpButton : {
         width: 170,
         marginHorizontal: 'auto',
         backgroundColor: 'purple',

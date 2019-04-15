@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { FlatList, StyleSheet, Text, View, Image, Dimensions     } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Image, Dimensions, Modal, TouchableHighlight} from 'react-native'
 import { white } from 'ansi-colors'
 // import { f, auth, database, storage } from '../../config/config'
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import ZoomableImage from '../Utilities/ZoomableImage'
-import ImageView from 'react-native-image-view';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { ScrollView } from 'react-native-gesture-handler';
+import ImageView from 'react-native-image-view';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import SingleImageZoomViewer from 'react-native-single-image-zoom-viewer'
 
 export default class Feed extends Component {
 
@@ -19,7 +21,15 @@ export default class Feed extends Component {
             photo_feed: [],
             refresh: false,
             loading: true,
+            images:[],
+            isModelVisible: true,
         }
+
+        this.layout = {};
+
+        this.likeRef = React.createRef();
+        this.shareRef = React.createRef();
+        this.commentRef = React.createRef();
     }
 
     componentDidMount = () => {
@@ -36,6 +46,12 @@ export default class Feed extends Component {
             return 's ago'
         }
     }
+
+    handleMeasure = (key, ref) => () => {
+        ref.current.measure((x, y, width, height, pageX, pageY) => {
+          this.layout[key] = { x, y, width, height, pageX, pageY };
+        });
+      };
 
     timeConverter = (timestamp) => {
         var a = new Date(timestamp * 1000);
@@ -119,6 +135,8 @@ export default class Feed extends Component {
         db.collection('Photos').orderBy('posted','desc').get().then(function(querySnapshot) {
 
             var photo_feed = that.state.photo_feed;
+            // var zoomImageFeed = that.state.zoomImageFeed;
+            var images = that.state.images;
 
             querySnapshot.docs.forEach(doc => {
             //    db.collection('Teachers').where("author","==",doc.data().author).get().then(function(subDoc) {
@@ -147,6 +165,24 @@ export default class Feed extends Component {
                     caption: doc.data().caption,
                 });
 
+                images.push({
+                    url: doc.data().url,
+                })
+
+                
+
+                // zoomImageFeed.push({
+                //     source: {
+                //         uri: doc.data().url,
+                //     },
+                //     title: doc.data().author,
+                //     width: 806,
+                //     height: 720,
+                //     posted: that.timeConverter(doc.data().posted),
+                //     author: doc.data().author,
+                //     caption: doc.data().caption,
+                // })
+
                 console.log (photo_feed)
 
                 that.setState({
@@ -169,6 +205,10 @@ export default class Feed extends Component {
     loadNew = () => {
         this.loadFeed();
     }
+
+    ShowModalFunction(visible) {
+        this.setState({ isModelVisible: false });
+      }
 
 
     render () 
@@ -196,10 +236,44 @@ export default class Feed extends Component {
                     </View>
 
                     <View>
-                       <Image
+
+                    {/* <Modal
+                        visible={this.state.isModelVisible}
+                        transparent={false}
+                        onRequestClose={() => this.ShowModalFunction()}>
+                        <ImageViewer imageUrls={this.state.images} />
+                    </Modal> */}
+
+                       {/* <Image
                         source={{uri: item.url }}
                         style={styles.imageFeed}
-                        />
+                        resizeMethod={"scale"}
+                        /> */}
+
+                        <TouchableHighlight>
+                            <Image
+                                source={{uri: item.url }}
+                                style={styles.imageFeed}
+                                resizeMethod={"resize"}
+                                resizeMode={"stretch"}
+                            />
+                        </TouchableHighlight>
+
+
+                        {/* <SingleImageZoomViewer source={{uri:item.url}}/> */}
+                        {/* <ImageView
+                            images={images}
+                            imageIndex={0}
+                            isVisible={this.state.isImageViewVisible}
+                            renderFooter={(currentImage) => (<View><Text>My footer</Text></View>)}
+                        /> */}
+                        {/* <ImageZoom cropWidth={Dimensions.get('window').width}
+                        cropHeight={Dimensions.get('window').height}
+                        imageWidth={200}
+                        imageHeight={200}>
+                            <Image style={{width:200, height:200}}
+                                source={{uri:item.url}}/>
+                        </ImageZoom> */}
                     </View>
 
                     <View style={styles.CaptionComment}>
@@ -219,9 +293,8 @@ export default class Feed extends Component {
 
 const styles = StyleSheet.create({  
     imageFeed: {  
-        resizeMode: 'cover',
         width: '100%',
-        height: 275,
+        height: 400,
     },
     flatListHere: {
         flex: 1,
@@ -248,4 +321,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         textAlign: 'center',
     },
+    MainContainer: {
+        flex: 1,
+        alignItems: 'center',
+      },
 });

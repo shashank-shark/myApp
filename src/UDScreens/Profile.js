@@ -39,6 +39,13 @@ export default class Profile extends Component {
                 })
 
                 console.log (that.state.user_info)
+                
+                console.log ("$$$$$$$$$$$$$$$$$$   USER   INFO $$$$$$$$$$$$");
+                console.log (user.uid)
+                console.log (user.displayName)
+                console.log (user.email)
+                console.log (user.phoneNumber)
+                console.log (user.photoURL)
 
                 that.setState ({
                     loggedin: true,
