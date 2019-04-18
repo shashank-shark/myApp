@@ -24,10 +24,6 @@ class ImageGallery extends React.Component {
       ModalVisibleStatus: false,
       items: [],
     };
-    // this.state = { items: [] };
-    // this.state = {
-    //   items: [],
-    // }
   }
 
   componentDidMount() {
@@ -58,7 +54,11 @@ class ImageGallery extends React.Component {
         console.log (idCount)
       })
       that.setState(items)
-    })
+    }).then(dcum => {
+      console.log (items)
+  }).catch(err => {
+      console.log ("ERROR occurred" + err)
+  })
 
     // let items = Array.apply(null, Array(60)).map((v, i) => {
     //   //Using demo placeholder images but you can add your images here
