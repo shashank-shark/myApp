@@ -60,7 +60,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
   {  
     shifting: false,
     tabBarPosition: 'bottom',
-    initialRouteName: "Gallery",  
+    initialRouteName: "Events",  
     activeColor: '#f0edf6',  
     inactiveColor: '#226557',  
     barStyle: { backgroundColor: '#3BAD87' },

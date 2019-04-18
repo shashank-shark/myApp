@@ -252,7 +252,7 @@ export default class Feed extends Component {
 
                         <TouchableHighlight>
                             <Image
-                                source={{uri: item.url }}
+                                source={{uri: item.url}}
                                 style={styles.imageFeed}
                                 resizeMethod={"resize"}
                                 resizeMode={"stretch"}
