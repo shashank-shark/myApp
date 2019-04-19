@@ -12,18 +12,25 @@ export default class HomeActivity extends Component {
       this.state = {
         TextInputValue: '',
         eventName: '',
-        isDateTimePickerVisible: false,
+        isDateTimePickerVisibleStart: false,
+        isDateTimePickerVisibleEnd: false,
         startDateText: '',
         endDateText: '',
         startDate:'',
-        dateTimeStamp: 0,
+        endDate: '',
+        startdateTimeStamp: 0,
+        enddateTimeStamp: 0,
         eventInfo: '',
       }
   }
 
-  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+  _showDateTimePickerEnd = () => this.setState({ isDateTimePickerVisibleEnd: true });
+  _showDateTimePickerStart = () => this.setState({ isDateTimePickerVisibleStart: true });
 
-  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _hideDateTimePickerEnd = () => this.setState({ isDateTimePickerVisibleEnd: false });
+  _hideDateTimePickerStart = () => this.setState({ isDateTimePickerVisibleStart: false });
+
 
   _handleStartDatePicked = (date) => {
     console.log('A date has been picked: ', date);
@@ -33,10 +40,25 @@ export default class HomeActivity extends Component {
     var timeStampTime = date.getTime() / 1000;
     console.log (typeof timeStampTime)
     var dateString = date.toString();
-    this._hideDateTimePicker();
+    this._hideDateTimePickerStart();
     this.setState({
       startDateText: dateString,
-      dateTimeStamp:date.getTime() / 1000,
+      startdateTimeStamp:date.getTime() / 1000,
+    })
+  };
+
+  _handleEndDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    console.log (typeof date)
+    console.log (date.getTime() / 1000)
+
+    var timeStampTime = date.getTime() / 1000;
+    console.log (typeof timeStampTime)
+    var dateString = date.toString();
+    this._hideDateTimePickerEnd();
+    this.setState({
+      endDateText: dateString,
+      enddateTimeStamp:date.getTime() / 1000,
     })
   };
 
@@ -97,7 +119,8 @@ export default class HomeActivity extends Component {
     console.log (that.state.eventInfo)
 
       db.collection('Events').doc(randUID).set({
-        dateOfConduct: that.state.dateTimeStamp,
+        dateOfConductStart: that.state.startdateTimeStamp,
+        dateOfConductEnd: that.state.enddateTimeStamp,
         info: that.state.eventInfo,
         name: that.state.eventName,
         url:'',
@@ -135,7 +158,7 @@ export default class HomeActivity extends Component {
          Add Event 
         </Text>
 
-        <TextInput
+        {/* <TextInput
           style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2}}
           // Adding hint in TextInput using Placeholder option.
           placeholder=" Enter Class"
@@ -145,7 +168,7 @@ export default class HomeActivity extends Component {
           onChangeText={TextInputValue => this.setState({TextInputValue})}
           // Making the Under line Transparent.
           underlineColorAndroid="transparent"
-        />
+        /> */}
         <TextInput
           style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2}}
           // Adding hint in TextInput using Placeholder option.
@@ -166,18 +189,33 @@ export default class HomeActivity extends Component {
           underlineColorAndroid="transparent"
         />
 
-        <TouchableOpacity style={styles.DateButton} onPress={this._showDateTimePicker}>
+        <TouchableOpacity style={styles.DateButton} onPress={this._showDateTimePickerStart}>
             <Text style={{color: 'white'}}>Select Start Date</Text>
         </TouchableOpacity>
-        <DateTimePicker
-          isVisible={this.state.isDateTimePickerVisible}
-          onConfirm={this._handleStartDatePicked}
-          onCancel={this._hideDateTimePicker}
-        />
-        
         <View>
           <Text>{this.state.startDateText}</Text>
         </View>
+        <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisibleStart}
+          onConfirm={this._handleStartDatePicked}
+          onCancel={this._hideDateTimePickerStart}
+        />
+        <TouchableOpacity style={styles.DateButton} onPress={this._showDateTimePickerEnd}>
+            <Text style={{color: 'white'}}>Select End Date</Text>
+        </TouchableOpacity>
+        <View>
+          <Text>{this.state.endDateText}</Text>
+        </View>
+
+        <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisibleEnd}
+          onConfirm={this._handleEndDatePicked}
+          onCancel={this._hideDateTimePickerEnd}
+        />
+        
+        {/* <View>
+          <Text>{this.state.endDateText}</Text>
+        </View> */}
 
         {/* <TouchableOpacity style={styles.DateButton} onPress={this._showDateTimePicker}>
             <Text style={{color: 'white'}}>Select End Date</Text>
@@ -224,6 +262,6 @@ const styles = StyleSheet.create({
     height: 45,
     width: "95%",
     padding: 5,
-    margin: 5,
+    margin: 1,
   },
 });

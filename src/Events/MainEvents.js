@@ -107,7 +107,7 @@ export default class Users extends Component {
 
     console.log (timeStampYestNum)
 
-    db.collection('Events').orderBy('dateOfConduct').where('dateOfConduct','>=', timeStampYestNum).get().then(function(querySnapshot){
+    db.collection('Events').orderBy('dateOfConductEnd').where('dateOfConductEnd','>=', timeStampYestNum).get().then(function(querySnapshot){
       var idCount = 0;
       var items;
 
@@ -115,7 +115,7 @@ export default class Users extends Component {
 
       querySnapshot.docs.forEach(doc => {
 
-        var dateString = new Date((doc.data().dateOfConduct) * 1000).toDateString()
+        var dateString = new Date((doc.data().dateOfConductStart) * 1000).toDateString()
 
         console.log (dateString)
         console.log (typeof dateString)
