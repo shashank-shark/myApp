@@ -5,7 +5,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
-export default class HomeActivity extends Component {
+export default class AddEvent extends Component {
 
   constructor(props) {
       super(props)
